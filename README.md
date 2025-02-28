@@ -1,7 +1,8 @@
 # BeAStXLua
 
-OpenTX Lua Script for BEASTX RC Flight Control (Microbeast PLUS/Ultra and Nanobeast).
-Script is communicating with BEASTX FBL system using the CRSF Telemetry protocol. Please make sure to use a compatible telemetry firmware version 5.9.11 or above. 
+OpenTX Lua Script for BEASTX RC Flight Control (Microbeast PLUS/Ultra and Nanobeast). The BEASTX.Lua script is designed to interact with BEASTX flight controllers via OpenTX-compatible radio transmitters. It provides a graphical user interface for configuring various device settings, including receiver parameters, basic setup options, flight parameters, and governor settings. The script communicates with the flight controller through the Crossfire telemetry protocol.
+
+This script is still under development. Contributions and feedback are welcome!
 
 
 ## Installation
@@ -19,6 +20,26 @@ Script is communicating with BEASTX FBL system using the CRSF Telemetry protocol
 * After last menu step (or when stepping back from first menu item) you will get back to main screen.
 * If leaving lua script completely, MICROBEAST/nanobeast will exit menu automatically after a second. 
 
+## Code structure
+- **Device Information Handling**:
+  - The `device` table stores details about the connected BEASTX device.
+- **Menu System**:
+  - The `menus` table defines available configuration categories.
+  - The `menutext` table provides descriptions and hints for menu items.
+- **Command Definitions**:
+  - The `Command` table contains constants for various control commands sent to the flight controller.
+  - The `MenuControl` table defines commands specific to the menu navigation system.
+- **Functions**:
+  - `sendPing()`: Sends a status request to the flight controller. The script continuously sends periodic `ping` messages to maintain an active connection.
+  - `sendGetMenuStatus()`: Requests the current menu status from the device.
+  - `sendEnterMenu(menu, step)`: Opens a specific menu and step within the configuration system.
+  - `handleTelemetry()`: Processes incoming telemetry data (response to commands) from the BEASTX device.
+  - `drawMainScreen()`: Displays the main device status screen.
+  - `drawMenuList()`: Displays the list of available configuration menus.
+  - `drawSubmenuItem()`: Shows details for a selected menu item.
+  - `handleEvent(event)`: Handles user input events for navigation and selection.
+  - `run(event)`: Main loop function responsible for rendering the UI and managing communication with the device.
 
-## Code
-code description will be added soon ...
+## Notes
+- This is an early version (`v0.1.0`) and some menu descriptions still need to be completed.
+- The script relies on the **Crossfire telemetry protocol**, so it requires a compatible radio system. We use the extended commands 0x29 and 0x2D as mentioned in CRSF documentation (https://github.com/crsf-wg/crsf/wiki/Packet-Types). Here the script is sending 0x2D (write command) to BEASTX flight control and system answers with 0x29 (device info).
