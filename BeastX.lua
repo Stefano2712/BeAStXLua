@@ -1,7 +1,6 @@
 -- BEASTX.Lua by BEASTX - DEVTeam
 -- (c) freakware GmbH 2025
--- v0.1.0
-
+-- v0.2.0
 local device = {
     name = {"MICROBEAST", "MBPLUS", "AR7200BX", "MBULTRA", "AR7210BX", "", "Nanobeast"},
     hardware = 0,
@@ -73,12 +72,12 @@ local menutext = {
             hint = " "
         },
         {
-            desc = "Telemetry input",         
-            hint = "Tap rudder stick"
-        },
-        {
             desc = " ",         
             hint = " "
+        },
+        {
+            desc = "Telemetry input",         
+            hint = "Tap rudder stick"
         },
         {
             desc = "Throttle F/S",         
@@ -310,22 +309,18 @@ local function handleTelemetry()
             device.firmwarepatch = tonumber(data[6])
         end
 
-        if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_EnterMenu and data[3] ~= current_menu then
-            current_menu = nil
-        end 
-
-        if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus then
-            if data[3] == current_menu then
+        if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus and data[3] ~= 0 then
+            if (data[4]) ~= selected_item and current_menu ~= 4 then
                 selected_item = data[4]
-                forwardMsg = ""
-                for i, v in ipairs(data) do
-                    if i > 4 then
-                        forwardMsg = forwardMsg .. string.char(v)
-                    end
-                end
-            else
-                current_menu = nil
             end
+            forwardMsg = ""
+            for i, v in ipairs(data) do
+                if i > 4 then
+                    forwardMsg = forwardMsg .. string.char(v)
+                end
+            end
+        elseif data[3] == 0 then
+            current_menu = nil
         end        
     end
 end
@@ -378,10 +373,15 @@ local function handleEvent(event)
             if selected_menu_index > #menus then
                 display_main_message = true
             else
-                -- open first menu point of selected menu
+                -- open first menu point of selected menu                
                 current_menu = selected_menu_index
-                selected_item = 1                
-                sendEnterMenu(selected_menu_index)
+                if (current_menu == 1) then -- RX menu starts with point 'B'!
+                    selected_item = 2
+                else                    
+                    selected_item = 1                
+                end
+
+                sendEnterMenu(selected_menu_index, selected_item)
             end
         elseif event == EVT_VIRTUAL_MENU then
             display_main_message = true
