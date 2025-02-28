@@ -11,7 +11,10 @@ Parameter A: Swashtrimm
     show trim values for roll, pitch, thrust
 
 Parameter B to L:
-    add description of paremter values
+    add description of parameter values
 
 Parameter M:
     display pitch value
+
+Governor FGH:
+    add gear ratio adjustment
