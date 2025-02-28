@@ -1,56 +1,12 @@
-Setup Menu E:
-
-    Rudder limit show values for left and right.
-    I.e. L: 1320  R: 1250
-    Maybe also show direction of stick using "<-" and "->" when holding stick
-
-    I.e. L: 1320 "->" R: 1250
-    "Use rudder"
-
-Setup Menu F:
-    Rudder Dir show direction and use "Nor" and "inv" instead of -1 or 1
-    Rudd. Dir. Norm (and die erste Stelle),momentan "1" oder -1 mit einem leerzeichen!
-       "->"
-    "Use roll to invert."
+Setup Menu A:
+    shows numbers only, add description
 
 Setup Menu G:
     Swash type show name of type
-    Zeigt ga rnix an momentan!
-    "Use rudder"
-
-Setup Menu H: (DIR)
-    Zeigt ga rnix an momentan!
-    Brauchen Servo nummer und direction!
-
-Setup Menu I: (Control DIR)
-    Zeigt nur 0-3 an, brauchen richtungspfeile!
-
-
-Setup Menu J: (Center)
-    Zeigt ga rnix an momentan!
-    Show servo selected and value.
-    I.e. "CH1: 1234"
-    "Use rudder and roll"
-
-Setup Menu K:
-Zeigt ga rnix an momentan!
-    Show "0.0 deg" & "6.0 deg" and value
-    0.0°:    0
-    6.0°: 1234
-    "Use rudder and roll!"
-
-Setup Menu L: "Pitch throw" => "Collective"
-    Zeigt nur 1 oder -1 an.
-    Brauche Pfeil und Wert und Nor/Inv
-
-    Nor / Inv
-    "L: 1234" ^ / v "H: 1234" and Arrow A / V oder ^ / v
-
-    "Use rudder, thrust, roll!"
-
-Setup M: Show limit
-    "Use rudder"
 
 Setup N: Governor
-    Zeigt 0 bis 3 an.
-    "Off/E/N/Mix"
+    shows numbers, add "Off/E/N/Mix"
+
+Add Parameter array
+Add Governor array
+Add RX menu array
