@@ -1,3 +1,7 @@
+-- BEASTX.Lua by BEASTX - DEVTeam
+-- (c) freakware GmbH 2025
+-- v0.1.0
+
 local device = {
     name = {"MICROBEAST", "MBPLUS", "AR7200BX", "MBULTRA", "AR7210BX", "", "Nanobeast"},
     hardware = 0,
