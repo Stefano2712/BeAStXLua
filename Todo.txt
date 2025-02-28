@@ -7,6 +7,11 @@ Setup Menu G:
 Setup N: Governor
     shows numbers, add "Off/E/N/Mix"
 
-Add Parameter array
-Add Governor array
-Add RX menu array
+Parameter A: Swashtrimm
+    show trim values for roll, pitch, thrust
+
+Parameter B to L:
+    add description of paremter values
+
+Parameter M:
+    display pitch value

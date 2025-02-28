@@ -25,14 +25,65 @@ local menus = {{
     items = {"A", "B", "C", "D", "E"}
 }}
 
--- TODO: Fill missing fields!!!
 local menutext = {
-    -- RX settings
+    -- RX settings (some points are not accessible when using telemetry connection!)
     {
         {
-            desc = "Device orientation",        
+            desc = " ",        
+            hint = " "
+        },
+        {
+            desc = "Thrust channel",        
+            hint = "Move thrust stick"
+        },
+        {
+            desc = "Roll channel",        
+            hint = "Move roll stick"
+        },
+        {
+            desc = "Pitch channel",        
+            hint = "Move pitch stick"
+        },
+        {
+            desc = "Rudder channel",        
+            hint = "Move rudder stick"
+        },
+        {
+            desc = "Gyro channel",        
+            hint = "Move gyro channel"
+        },
+        {
+            desc = "Motor channel",        
+            hint = "Move motor channel"
+        },
+        {
+            desc = "Aux channel",        
+            hint = "Move aux channel"
+        },
+        {
+            desc = "Gov channel",        
+            hint = "Move gov channel"
+        },
+        {
+            desc = "Rescue channel",        
+            hint = "Move rescue channel"
+        },
+        {
+            desc = " ",         
+            hint = " "
+        },
+        {
+            desc = "Telemetry input",         
             hint = "Tap rudder stick"
         },
+        {
+            desc = " ",         
+            hint = " "
+        },
+        {
+            desc = "Throttle F/S",         
+            hint = "Move motor channel"
+        }
     },
 
     -- Basic setup
@@ -98,17 +149,82 @@ local menutext = {
     -- Parameter setup
     {
         {
-            desc = "Device orientation",        
+            desc = "Swashplate trim",        
+            hint = "Move sticks to trim"
+        },
+        {
+            desc = "Control style",        
             hint = "Tap rudder stick"
+        },
+        {
+            desc = "Horizontal stability",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Gyro lock stability",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Stick deadband",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Rudder mix",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Pitch pump",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Cyclic acceleration",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Gov gain",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Gov soft start",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Gov acceleration",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Rescue mode",        
+            hint = "Tap rudder stick"
+        },
+        {
+            desc = "Rescue hover pitch",        
+            hint = "Use rudder to adjust"
         }
     },
 
     -- Governor setup
     {
         {
-            desc = "Device orientation",        
+            desc = "Sensor test",        
+            hint = " "
+        },
+        {
+            desc = "Start position",        
+            hint = "Move throttle"
+        },
+        {
+            desc = "Maximum position",
+            hint = "Move throttle"
+        },
+        {
+            desc = "Throttle curve",
+            hint = "Move throttle"
+        },
+        {
+            desc = "Signal divider",        
             hint = "Tap rudder stick"
         }
+        -- add gear ratio setting points F,G,H or by direct adjustment
     }
 }
 
@@ -200,6 +316,7 @@ local function handleTelemetry()
 
         if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus then
             if data[3] == current_menu then
+                selected_item = data[4]
                 forwardMsg = ""
                 for i, v in ipairs(data) do
                     if i > 4 then
