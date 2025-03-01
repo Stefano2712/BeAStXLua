@@ -1,6 +1,6 @@
 -- BEASTX.Lua by BEASTX - DEVTeam
 -- (c) freakware GmbH 2025
--- v0.2.0
+-- v0.3.0
 local device = {
     name = {"MICROBEAST", "MBPLUS", "AR7200BX", "MBULTRA", "AR7210BX", "", "Nanobeast"},
     hardware = 0,
@@ -332,7 +332,7 @@ local function handleTelemetry()
                 if i > 4 then
                     forwardMsg = forwardMsg .. string.char(v)
                 end
-            end
+            endq
         elseif data[3] == 0 then
             current_menu = nil
         end        
