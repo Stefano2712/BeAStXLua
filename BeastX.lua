@@ -7,7 +7,10 @@ local device = {
     eeprom = 0,
     firmwaremajor = 0,
     firmwareminor = 0,
-    firmwarepatch = 0
+    firmwarepatch = 0,
+    tailgain = 0,
+    rescuegain = 0,
+    bank = 0
 }
 
 local menus = {{
@@ -297,6 +300,14 @@ local function sendEnterMenu(menu, step)
     return true
 end
 
+function toSigned16(value)
+    if bit32.band(value, 0x8000) ~= 0 then
+        return value - 0x10000
+    else
+        return value
+    end
+end
+
 local function handleTelemetry()
     local command, data = crossfireTelemetryPop()
 
@@ -307,6 +318,9 @@ local function handleTelemetry()
             device.firmwaremajor = tonumber(data[4])
             device.firmwareminor = tonumber(data[5])
             device.firmwarepatch = tonumber(data[6])
+            device.tailgain = toSigned16(bit32.lshift(data[7], 8) + data[8])
+            device.rescuegain = toSigned16(bit32.lshift(data[9], 8) + data[10])
+            device.bank = tonumber(data[11])
         end
 
         if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus and data[3] ~= 0 then
@@ -325,10 +339,26 @@ local function handleTelemetry()
     end
 end
 
-local function drawMainScreen()    
+local function drawMainScreen()
+    gaintext = " "
+    rescuetext = " "
+
+    if device.tailgain > 0 then
+        gaintext = " HL"
+    elseif device.tailgain < 0 then
+        gaintext = " RT"
+    end
+
+    if device.rescuegain > 0 then
+        rescuetext = " ON"
+    end
+
     if device.hardware ~= 0 then
         lcd.drawText(5, 5, device.name[device.hardware], 0)
-        lcd.drawText(5, 15, device.firmwaremajor .. "." .. device.firmwareminor .. "." .. device.firmwarepatch, 0)
+        lcd.drawText(5, 15, "v" .. device.firmwaremajor .. "." .. device.firmwareminor .. "." .. device.firmwarepatch, 0)
+        lcd.drawText(5, 30, "Gain: " .. device.tailgain .. gaintext, 0)
+        lcd.drawText(5, 40, "Rescue: " .. device.rescuegain .. rescuetext, 0)
+        lcd.drawText(5, 50, "Bank: " .. device.bank, 0)
         lcd.drawText(100, 50, " --> ", INVERS)
     else
         lcd.drawText(5, 5,  "BEASTX Lua!", 0)
