@@ -1,6 +1,6 @@
 -- BEASTX.Lua by BEASTX - DEVTeam
 -- (c) freakware GmbH 2025
--- v0.3.0
+-- v0.4.0
 local device = {
     name = {"MICROBEAST", "MBPLUS", "AR7200BX", "MBULTRA", "AR7210BX", "", "Nanobeast"},
     hardware = 0,
@@ -324,15 +324,19 @@ local function handleTelemetry()
         end
 
         if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus and data[3] ~= 0 then
-            if (data[4]) ~= selected_item and current_menu ~= 4 then
-                selected_item = data[4]
+            if (data[4]) ~= selected_item then
+                if current_menu ~= 4 then
+                    selected_item = data[4]
+                else
+                    selected_item = data[4] - 14
+                end
             end
             forwardMsg = ""
             for i, v in ipairs(data) do
                 if i > 4 then
                     forwardMsg = forwardMsg .. string.char(v)
                 end
-            endq
+            end
         elseif data[3] == 0 then
             current_menu = nil
         end        
@@ -421,20 +425,20 @@ local function handleEvent(event)
     else
         if event == EVT_VIRTUAL_ENTER then
             -- Next ....
-            selected_item = selected_item + 1
-            if selected_item > #menus[current_menu].items then                
+            nextitem = selected_item + 1
+            if nextitem > #menus[current_menu].items then                
                 sendEnterMenu(0)
                 current_menu = nil                
             else
-                sendEnterMenu(current_menu, selected_item)
+                sendEnterMenu(current_menu, nextitem)
             end
         elseif event == EVT_VIRTUAL_MENU then
-            selected_item = selected_item - 1
-            if selected_item == 0 then
+            nextitem = selected_item - 1
+            if nextitem == 0 then
                 sendEnterMenu(0)
                 current_menu = nil
             else
-                sendEnterMenu(current_menu, selected_item)
+                sendEnterMenu(current_menu, nextitem)
             end
         end        
     end
