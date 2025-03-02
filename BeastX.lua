@@ -1,6 +1,6 @@
 -- BEASTX.Lua by BEASTX - DEVTeam
 -- (c) freakware GmbH 2025
--- v0.4.0
+-- v0.4.1
 local device = {
     name = {"MICROBEAST", "MBPLUS", "AR7200BX", "MBULTRA", "AR7210BX", "", "Nanobeast"},
     hardware = 0,
@@ -75,8 +75,8 @@ local menutext = {
             hint = " "
         },
         {
-            desc = " ",         
-            hint = " "
+            desc = "SYS mode",         
+            hint = "Tap rudder stick"
         },
         {
             desc = "Telemetry input",         
@@ -325,11 +325,7 @@ local function handleTelemetry()
 
         if data[1] == Command.CMDMenuControl and data[2] == MenuControl.MCtrl_GetStatus and data[3] ~= 0 then
             if (data[4]) ~= selected_item then
-                if current_menu ~= 4 then
                     selected_item = data[4]
-                else
-                    selected_item = data[4] - 14
-                end
             end
             forwardMsg = ""
             for i, v in ipairs(data) do
