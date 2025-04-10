@@ -355,23 +355,23 @@ local function drawMainScreen()
 
     if device.hardware ~= 0 then
         lcd.drawText(5, 5, device.name[device.hardware], 0)
-        lcd.drawText(5, 15, "v" .. device.firmwaremajor .. "." .. device.firmwareminor .. "." .. device.firmwarepatch, 0)
-        lcd.drawText(5, 30, "Gain: " .. device.tailgain .. gaintext, 0)
-        lcd.drawText(5, 40, "Rescue: " .. device.rescuegain .. rescuetext, 0)
-        lcd.drawText(5, 50, "Bank: " .. device.bank, 0)
-        lcd.drawText(100, 50, " --> ", INVERS)
+        lcd.drawText(5, 25, "v" .. device.firmwaremajor .. "." .. device.firmwareminor .. "." .. device.firmwarepatch, 0)
+        lcd.drawText(5, 45, "Gain: " .. device.tailgain .. gaintext, 0)
+        lcd.drawText(5, 65, "Rescue: " .. device.rescuegain .. rescuetext, 0)
+        lcd.drawText(5, 85, "Bank: " .. device.bank, 0)
+        lcd.drawText(100, 85, " --> ", INVERS)
     else
         lcd.drawText(5, 5,  "BEASTX Lua!", 0)
-        lcd.drawText(5, 15, "Connecting...", 0)
+        lcd.drawText(5, 25, "Connecting...", 0)
     end
 end
 
 local function drawMenuList()
     for i, menu in ipairs(menus) do
         local mode = (i == selected_menu_index) and INVERS or 0
-        lcd.drawText(5, -5 + (i * 10), menu.name, mode)
+        lcd.drawText(5, -5 + (i * 20), menu.name, mode)
     end
-    lcd.drawText(5, 0 + (#menus + 1) * 10, "EXIT", (selected_menu_index == #menus + 1) and INVERS or 0)
+    lcd.drawText(5, 0 + (#menus + 1) * 20, "EXIT", (selected_menu_index == #menus + 1) and INVERS or 0)
 end
 
 -- only list one menu item after another
@@ -379,9 +379,9 @@ local function drawSubmenuItem()
         for i, item in ipairs(menus[current_menu].items) do
             if (i == selected_item) then            
                 lcd.drawText(5, 5, menus[current_menu].name .. " - " .. item, 0)
-                lcd.drawText(5, 15, menutext[current_menu][i].desc, 0)
-                lcd.drawText(5, 27, forwardMsg, 0)
-                lcd.drawText(5, 45, menutext[current_menu][i].hint, 0)
+                lcd.drawText(5, 25, menutext[current_menu][i].desc, 0)
+                lcd.drawText(5, 45, forwardMsg, 0)
+                lcd.drawText(5, 65, menutext[current_menu][i].hint, 0)
             end
         end
 end
